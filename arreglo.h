@@ -47,7 +47,8 @@ public:
 //        return *this;
     }
 
-    void insertar_ultimo(const T &dato);
+    void insertar_ultimo( T &dato  );
+    void insertar_ultimo( const T &dato  );
     void insertar(unsigned int pos, const T &dato);
 
     void eliminar_ultimo();
@@ -130,17 +131,17 @@ unsigned int &arreglo<T>::tamano()
 template<class T>
 void arreglo<T>::expandir(unsigned int nueva_capacidad)
 {
-    if(nueva_capacidad > capacidad_actual){
-        capacidad_actual = nueva_capacidad;
 
-        T *temp = new T[nueva_capacidad];
-        for(unsigned int i = 0; i < num_elementos; i++){
-            temp[i] = data[i];
-        }
-        delete[] data;
-        data = temp;
+    capacidad_actual = nueva_capacidad;
+
+    T *temp = new T[nueva_capacidad];
+    for(unsigned int i = 0; i < num_elementos; i++){
+        temp[i] = data[i];
     }
-    else throw std::runtime_error("operacion invalida");
+    delete[] data;
+    data = temp;
+
+
 }
 
 template<class T>
@@ -156,7 +157,16 @@ T &arreglo<T>::operator[](unsigned int p)
 //}
 
 template<class T>
-void arreglo<T>::insertar_ultimo(const T &dato)
+void arreglo<T>::insertar_ultimo(T &dato )
+{
+    if(num_elementos == capacidad_actual){
+        expandir(capacidad_actual*2);
+    }
+    data[num_elementos] = dato;
+    num_elementos++;
+}
+template<class T>
+void arreglo<T>::insertar_ultimo(const T &dato )
 {
     if(num_elementos == capacidad_actual){
         expandir(capacidad_actual*2);

@@ -6,11 +6,12 @@
 #define ACTIVIDAD02_POSICION_H
 
 #include <iostream>
+#include <iomanip>
 using namespace std;
 class Posicion
 {
     friend ostream &operator<<(ostream &out, Posicion &posicion){
-        out << "(" << posicion.fila << ", " << posicion.columna << ")" << endl;
+        out << setw(5) << "(" << posicion.fila << ", " << posicion.columna << ")" ;
 
         return out;
     }
