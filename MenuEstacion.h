@@ -49,7 +49,11 @@ public:
         }
 
 
+    void eliminar();
 
+    void leerPosicion(Posicion &posicion);
+
+    bool excedePosicion(Posicion &posicion);
 };
 
 

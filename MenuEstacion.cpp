@@ -26,6 +26,10 @@ void MenuEstacion::menu() {
         else if("2" == op){
             mostrar();
         }
+        else if("3" == op){
+            eliminar();
+        }
+
 
         else if("0" == op){
             break;
@@ -82,33 +86,12 @@ void MenuEstacion::pedirId(Estacion *estacion) {
 }
 
 void MenuEstacion::pedirPosicion(Estacion *estacion) {
-    string temp;
-
     Posicion posicion;
-    unsigned int fila, columna;
 
-    do {
-        stringstream ss;
-        cout << "Fila: ";
-        getline(cin, temp);
-        ss << temp;
-        ss >> fila;
-        posicion.setFila(fila);
-
-        ss.clear();
-
-        cout << "Columna: ";
-        getline(cin, temp);
-        ss << temp;
-        ss >> columna;
-        posicion.setColumna(columna);
+    leerPosicion(posicion);
 
 
-    } while (!posicionValida(posicion));
-
-
-    if(posicion.getFila() >= estaciones[0].capacidad()
-       || posicion.getColumna() >= estaciones.capacidad() )
+    if(excedePosicion(posicion))
     {
         if(14 >= (posicion.getFila() + posicion.getColumna())){
             /*expandir a 8x8 */
@@ -138,4 +121,53 @@ void MenuEstacion::mostrar() {
         }
         cout << endl;
     }
+}
+
+void MenuEstacion::eliminar() {
+    Posicion posicion;
+
+    leerPosicion(posicion);
+
+    if(excedePosicion(posicion))
+    {
+        cout << "No hay estacion" << endl;
+    }
+
+    if( estaciones[posicion.getFila()][posicion.getColumna()] == nullptr){
+        cout << "No hay estacion" << endl;
+    } else{
+        delete estaciones[posicion.getFila()][posicion.getColumna()];
+        estaciones[posicion.getFila()][posicion.getColumna()] = nullptr;
+    }
+}
+
+void MenuEstacion::leerPosicion(Posicion &posicion) {
+    string temp;
+    unsigned int fila, columna;
+
+    do {
+        stringstream ss;
+        cout << "Fila: ";
+        getline(cin, temp);
+        ss << temp;
+        ss >> fila;
+        posicion.setFila(fila);
+
+        ss.clear();
+
+        cout << "Columna: ";
+        getline(cin, temp);
+        ss << temp;
+        ss >> columna;
+        posicion.setColumna(columna);
+
+
+    } while (!posicionValida(posicion));
+
+
+}
+
+bool MenuEstacion::excedePosicion(Posicion &posicion) {
+    return (posicion.getFila() >= estaciones[0].capacidad())
+           || (posicion.getColumna() >= estaciones.capacidad());
 }
