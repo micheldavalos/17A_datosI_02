@@ -33,7 +33,14 @@ private:
 
     void mostrar();
 
+    void eliminar();
+
+    void leerPosicion(Posicion &posicion);
+
+    bool excedePosicion(Posicion &posicion);
+
 public:
+
 
     /*! Constrctor.
      *! Constructor inicial para inicializar la matriz de estaciones
@@ -48,12 +55,7 @@ public:
         menu();
         }
 
-
-    void eliminar();
-
-    void leerPosicion(Posicion &posicion);
-
-    bool excedePosicion(Posicion &posicion);
+    void modificar();
 };
 
 

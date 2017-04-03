@@ -29,6 +29,9 @@ void MenuEstacion::menu() {
         else if("3" == op){
             eliminar();
         }
+        else if("4" == op){
+            modificar();
+        }
 
 
         else if("0" == op){
@@ -107,6 +110,10 @@ void MenuEstacion::pedirPosicion(Estacion *estacion) {
             }
         }
     }
+    if( estaciones[posicion.getFila()][posicion.getColumna()] != nullptr){
+          delete estaciones[posicion.getFila()][posicion.getColumna()];
+        estaciones[posicion.getFila()][posicion.getColumna()] = nullptr;
+    }
     estaciones[posicion.getFila()][posicion.getColumna()] = estacion;
     estacion->setPosicion(posicion);
 }
@@ -170,4 +177,38 @@ void MenuEstacion::leerPosicion(Posicion &posicion) {
 bool MenuEstacion::excedePosicion(Posicion &posicion) {
     return (posicion.getFila() >= estaciones[0].capacidad())
            || (posicion.getColumna() >= estaciones.capacidad());
+}
+
+void MenuEstacion::modificar() {
+    Posicion posicion;
+
+    leerPosicion(posicion);
+
+    if(excedePosicion(posicion)){
+        cout << "No existe estacion" << endl;
+    }
+    else if(estaciones[posicion.getFila()][posicion.getColumna()] == nullptr){
+        cout << "No existe estacion" << endl;
+    }
+    else{
+        string op;
+
+        cout << "1) Modificar Id" << endl;
+        cout << "2) Modificar Posicion" << endl;
+
+
+        getline(cin, op);
+
+        if("1" == op){
+            pedirId(estaciones[posicion.getFila()][posicion.getColumna()]);
+        }
+        else if("2" == op){
+            Posicion anterior = posicion;
+            pedirPosicion(estaciones[posicion.getFila()][posicion.getColumna()]);
+            delete estaciones[anterior.getFila()][anterior.getColumna()];
+            estaciones[anterior.getFila()][anterior.getColumna()] = nullptr;
+        }
+
+    }
+
 }
